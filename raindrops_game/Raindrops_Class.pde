@@ -6,7 +6,7 @@ class Raindrops {
   int d;
   
   Raindrops(){
-    raindrop = loadImage("
+    raindrop = loadImage("raindrop.jpg");
     d = 5;
     loc = new PVector(random(width), random(-10,10));
     vel = new PVector(0, random(.5, 3));
@@ -27,4 +27,7 @@ class Raindrops {
       loc = new PVector(random(width), 0);
     }
   }
+  
+  void recognize(Catcher c){
+    if (dist(
 }
