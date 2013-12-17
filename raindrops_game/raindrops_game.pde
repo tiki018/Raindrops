@@ -6,6 +6,7 @@ int newTime = 0;
 int score = 0;
 int lives = 3;
 PImage background;
+PImage heart;
 boolean start = false;
 boolean stop = false;
 
@@ -17,6 +18,7 @@ void setup() {
     r1[i] = new Raindrops();
   }
   background = loadImage("background.jpg"); //creates background
+  heart = loadImage("heart.png");
 }
 
 void draw() {
@@ -42,7 +44,7 @@ void draw() {
       r1[i].recognize(c);
     }
     for (int i= 0; i< lives; i++){
-      ellipse(400+20*i, 100, 15, 15);
+      image(heart,400+30*i, 75,25,25);
     }
     if(lives == 0){
       start = false;
