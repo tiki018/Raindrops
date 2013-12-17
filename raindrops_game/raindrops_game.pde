@@ -47,14 +47,35 @@ void draw() {
     if(lives == 0){
       start = false;
       stop = true;
+      for(int i=1; i< index; i++){
+        r1[i].vel.set(0,0);
+        r1[i].acc.set(0,0);
+        r1[i].loc.set(-500,-500);
+      }
     }
   }
-  if(start == false && stop == true)
+  if(start == false && stop == true){
+    fill(0);
+    textSize(50);
+    text("GAME OVER!", 250,150);
+    fill(120,100,100);
+    rect(200, 250, 100, 50);
+    fill(0);
+    textSize(15);
+    text("Restart", 200,250);
+  }
 }
 
 void mousePressed(){
-  if(mouseX>100 && mouseX < 300 && mouseY>200 && mouseY<300 && start==false){
+  if(mouseX>100 && mouseX < 300 && mouseY>200 && mouseY<300 && start==false && stop==false){
     oldTime=0;
+    start = true;
+    stop = false;
+  }
+  if(mouseX>100 && mouseX < 300 && mouseY>200 && mouseY<300 && start==false && stop==true){
+    oldTime=0;
+    lives = 3;
+    score = 0;
     start = true;
     stop = false;
   }

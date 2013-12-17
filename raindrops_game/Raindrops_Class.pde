@@ -35,6 +35,11 @@ class Raindrops {
       vel.set(0,0);
       acc.set(0,0);
     }
+    if (start == false && stop == true){
+      loc.set(-500,-500);
+      vel.set(0,0);
+      acc.set(0,0);
+    }
   }
 }
   
