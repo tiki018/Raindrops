@@ -4,7 +4,7 @@ class Catcher {
   PImage catcher;
   
   Catcher() {
-    d = 60;
+    d = 75;
     loc = new PVector(mouseX, height-50);
     catcher = loadImage("monkey.png");
   }

@@ -18,7 +18,7 @@ void setup() {
   for (int i = 0; i<r1.length; i++) { //creates raindrops
     r1[i] = new Raindrops();
   }
-  background = loadImage("background.jpg"); //creates background
+  background = loadImage("jungle.png"); //creates background
   heart = loadImage("heart.png");
 }
 
@@ -30,10 +30,10 @@ void draw() {
     rect(200, 250, 100, 50);
   }
   if (start == true && stop == false) {  
-    fill(0);
+    fill(360);
     textAlign(CENTER);
-    textSize(50);
-    text("Score:\n" +score, 100, 100); //displays scores
+    textSize(40);
+    text("Score: " +score, 230, 50); //displays scores
     if (millis() - oldTime >=1500) { //controls time for raindrops falling
       oldTime = millis();
       index++;
@@ -45,7 +45,7 @@ void draw() {
       r1[i].recognize(c);
     }
     for (int i= 0; i< lives; i++){
-      image(heart,400+30*i, 75,25,25);
+      image(heart,400+40*i, 75,35,35);
     }
     if(lives == 0){
       start = false;
@@ -58,7 +58,7 @@ void draw() {
     }
   }
   if(start == false && stop == true){
-    fill(0);
+    fill(360);
     textSize(50);
     text("GAME OVER!", 250,150);
     fill(120,100,100);
