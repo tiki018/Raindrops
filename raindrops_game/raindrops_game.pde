@@ -13,6 +13,7 @@ boolean stop = false;
 void setup() {
   size(500, 500);
   colorMode(HSB, 360, 100, 100);
+  imageMode(CENTER);
   c = new Catcher();
   for (int i = 0; i<r1.length; i++) { //creates raindrops
     r1[i] = new Raindrops();
