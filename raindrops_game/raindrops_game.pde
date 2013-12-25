@@ -2,9 +2,13 @@ Catcher c;
 Raindrops [] r1 = new Raindrops [500];
 int index = 1;
 int oldTime = 0;
+int fTime = 0;
 int newTime = 0;
+int startTime = 0;
+int gameTime = 0;
 int score = 0;
 int lives = 3;
+float frequency = 1;
 PImage background;
 PImage heart;
 PImage jungleback;
@@ -99,10 +103,15 @@ void draw() {
     textAlign(CENTER);
     textSize(40);
     text("Score: " +score, 230, 50); //displays scores
-    if (millis() - oldTime >=1500) { //controls time for raindrops falling
+    if(millis() - fTime >= 1000){
+      fTime = millis();
+      frequency = frequency - .01;
+    }
+    if (millis() - oldTime >= 1500*frequency) { //controls time for raindrops falling
       oldTime = millis();
       index++;
     }
+    gameTime = oldTime - startTime;
     c.display();
     for (int i=1; i < index; i++) { //drops raindrops at the controlled time
       r1[i].display();
@@ -132,6 +141,7 @@ void draw() {
     fill(360);
     textSize(50);
     text("GAME OVER!", 250, 150);
+    text("Score:" +score, 250, 400);
     fill(120, 100, 100);
     rect(150, 250, 100, 50);
     rect(350, 250, 100, 50);
@@ -147,6 +157,8 @@ void mousePressed() {
     oldTime=0;
     lives=3;
     score = 0;
+    frequency = 1;
+    startTime=millis();
     start = true;
     stop = false;
   }
@@ -168,6 +180,8 @@ void mousePressed() {
     oldTime=0;
     lives = 3;
     score = 0;
+    frequency =1;
+    startTime=millis();
     start = true;
     stop = false;
   }
