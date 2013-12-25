@@ -10,7 +10,7 @@ class Raindrops {
     d = 40;
     loc = new PVector(random(d, width-d), -40);
     vel = new PVector(0, 2);
-    acc = new PVector(0, .01);
+    acc = new PVector(0, .1);
     raindrop = loadImage("raindrop.png"); //loads raindrop picture
     jungledrop = loadImage("banana.png");
   }
@@ -25,8 +25,15 @@ class Raindrops {
   }
 
   void move() {
+    if(loc.y > 0){
+      acc.set(0, gameTime*.000001);
+    }
+    else{
+      acc.set(0,0);
+    }
     loc.add(vel);
     vel.add(acc);
+    println(acc);
   }
 
   void recognize(Catcher c) { 
