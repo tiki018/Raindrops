@@ -39,15 +39,15 @@ void draw() {
   if (start == true && stop == true && jungle == false && rain == false) {
     image(rainback, 0, 250);
     image(jungleback, 500, 250);
-    image(monkey, 375, 400, 75, 75);
-    image(bucket, 125, 400, 75, 75);
+    image(monkey, 375, 375, 75, 75);
+    image(bucket, 125, 375, 75, 75);
 
     fill(360);
-    textSize(40);
-    text("<- CHOOSE THEME ->", 250, 470);
+    textSize(30);
+    text("SELECT BOX TO\n<- CHOOSE THEME ->", 250, 440);
     fill(360);
     stroke(0);
-    strokeWeight(0);
+    strokeWeight(8);
     rect(125, 100, 50, 50);
     if (mouseX>100 && mouseX<150 && mouseY>75 && mouseY<125) {
       fill(0,100,100);
@@ -59,7 +59,7 @@ void draw() {
     text("Rain", 125, 200);
     fill(360);
     stroke(0);
-    strokeWeight(1);
+    strokeWeight(8);
     rect(375, 100, 50,50);
     if (mouseX>350 && mouseX<400 && mouseY>75 && mouseY<125) {
       fill(0, 100, 100);
