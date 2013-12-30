@@ -1,5 +1,5 @@
 Catcher c;
-Raindrops [] r1 = new Raindrops [500];
+Raindrops [] r1 = new Raindrops [1000];
 int index = 1;
 int oldTime = 0;
 int fTime = 0;
@@ -9,7 +9,6 @@ int gameTime = 0;
 int score = 0;
 int lives = 3;
 float frequency = 1;
-PImage background;
 PImage heart;
 PImage jungleback;
 PImage rainback;
@@ -25,142 +24,25 @@ void setup() {
   colorMode(HSB, 360, 100, 100);
   imageMode(CENTER);
   textAlign(CENTER);
+  rectMode(CENTER);
   c = new Catcher();
   for (int i = 0; i<r1.length; i++) { //creates raindrops
     r1[i] = new Raindrops();
   }
-  background = loadImage("jungle.png"); //creates background
-  heart = loadImage("heart.png");
-  rainback = loadImage("rainback.jpg");
-  jungleback = loadImage("jungle.png");
-  monkey = loadImage("monkey.png");
-  bucket = loadImage("bucket.png");
+  images();
 }
 
 void draw() {
   background(0);
-  rectMode(CENTER);
-  if (start == true && stop == true && jungle == false && rain == false) {
-    image(rainback, 0, 250);
-    image(jungleback, 500, 250);
-    image(monkey, 375, 375, 75, 75);
-    image(bucket, 125, 375, 75, 75);
-
-    fill(360);
-    textSize(30);
-    text("SELECT BOX TO\n<- CHOOSE THEME ->", 250, 440);
-    fill(360);
-    stroke(0);
-    strokeWeight(8);
-    rect(125, 100, 50, 50);
-    if (mouseX>100 && mouseX<150 && mouseY>75 && mouseY<125) {
-      fill(0,100,100);
-      stroke(0,100,100);
-      strokeWeight(8);
-      line(100,100,112.5,125);
-      line(112.5,125, 150,75);
-    }
-    text("Rain", 125, 200);
-    fill(360);
-    stroke(0);
-    strokeWeight(8);
-    rect(375, 100, 50,50);
-    if (mouseX>350 && mouseX<400 && mouseY>75 && mouseY<125) {
-      fill(0, 100, 100);
-      stroke(0,100,100);
-      strokeWeight(8);
-      line(350,100,362.5,125);
-      line(362.5, 125, 400,75);      
-    }
-    text("Jungle", 375, 200);
-    fill(360);
-    stroke(0);
-    strokeWeight(1);
-  }
-  if (start == false && stop == false && rain == true && jungle == false) {
-    background(rainback);
-  }
-  if (start == false && stop == false && rain == false && jungle == true) {
-    background(jungleback);
-  }
-  if (start == false && stop == false) {
-    fill(120, 100, 100);
-    rect(150, 250, 100, 50);
-    rect(350, 250, 100, 50);
-    fill(0);
-    textSize(13);
-    text("Start", 150, 250);
-    text("Change Theme", 350, 250);
-  }
-  if (start == true && stop == false && rain == false && jungle == true) {
-    background(jungleback);
-  }
-  if (start == true && stop == false && rain == true && jungle == false) {
-    background(rainback);
-  }
-  if (start == true && stop == false) {  
-    fill(360);
-    textAlign(CENTER);
-    textSize(40);
-    text("Score: " +score, 230, 50); //displays scores
-    if(millis() - fTime >= 1000){
-      fTime = millis();
-      frequency = frequency - .01;
-    }
-    if (millis() - oldTime >= 1500*frequency) { //controls time for raindrops falling
-      oldTime = millis();
-      index++;
-    }
-    gameTime = oldTime - startTime;
-    c.display();
-    for (int i=1; i < index; i++) { //drops raindrops at the controlled time
-      r1[i].display();
-      r1[i].move();
-      r1[i].recognize(c);
-    }
-    for (int i= 0; i< lives; i++) {
-      image(heart, 400+40*i, 75, 35, 35);
-    }
-    if (lives == 0) {
-      start = false;
-      stop = true;
-      for (int i=1; i< index; i++) {
-        r1[i].vel.set(0, 0);
-        r1[i].acc.set(0, 0);
-        r1[i].loc.set(-500, -500);
-      }
-    }
-  }
-  if (start == false && stop == true && jungle == true && rain == false) {
-    background(jungleback);
-  }
-  if (start == false && stop == true && jungle == false && rain == true) {
-    background(rainback);
-  }
-  if (start == false && stop == true) {
-    fill(360);
-    textSize(50);
-    text("GAME OVER!", 250, 150);
-    text("Score:" +score, 250, 400);
-    fill(120, 100, 100);
-    rect(150, 250, 100, 50);
-    rect(350, 250, 100, 50);
-    fill(0);
-    textSize(13);
-    text("Restart", 150, 250);
-    text("Change Theme", 350, 250);
-  }
+  thememenu();
+  startmenu();
+  playgame();
+  gameover();
 }
 
 void mousePressed() {
   if (mouseX>100 && mouseX < 200 && mouseY>225 && mouseY<275 && start==false && stop==false) {
-    oldTime=0;
-    lives=3;
-    score = 0;
-    frequency = 1;
-    startTime=millis();
-    start = true;
-    stop = false;
+    reset();
   }
   if (mouseX > 300 && mouseX<400 && mouseY>225 && mouseY<275 && start == false && stop == false && jungle == true && rain == false) {
     background(0);
@@ -177,13 +59,7 @@ void mousePressed() {
     rain = false;
   }
   if (mouseX>100 && mouseX < 200 && mouseY>225 && mouseY<275 && start==false && stop==true) {
-    oldTime=0;
-    lives = 3;
-    score = 0;
-    frequency =1;
-    startTime=millis();
-    start = true;
-    stop = false;
+    reset();
   }
   if (mouseX>300 && mouseX < 400 && mouseY>225 && mouseY<275 && start == false && stop == true && jungle == true && rain == false) {
     background(0);
@@ -192,7 +68,7 @@ void mousePressed() {
     jungle = false;
     rain = false;
   }
-   if (mouseX>300 && mouseX < 400 && mouseY>225 && mouseY<275 && start == false && stop == true && jungle == false && rain == true) {
+  if (mouseX>300 && mouseX < 400 && mouseY>225 && mouseY<275 && start == false && stop == true && jungle == false && rain == true) {
     background(0);
     start = true;
     stop = true;
@@ -213,3 +89,140 @@ void mousePressed() {
   }
 }
 
+void reset() {
+  oldTime=0;
+  lives=3;
+  score = 0;
+  frequency = 1;
+  startTime=millis();
+  start = true;
+  stop = false;
+}
+
+void images() {
+  heart = loadImage("heart.png");
+  rainback = loadImage("rainback.jpg");
+  jungleback = loadImage("jungle.png");
+  monkey = loadImage("monkey.png");
+  bucket = loadImage("bucket.png");
+}
+
+void checkbackground() {
+  if (jungle == true && rain == false) {
+    background(jungleback);
+  }
+  if (rain == true && jungle == false) {
+    background(rainback);
+  }
+}
+
+void timecheck() {
+  if (millis() - fTime >= 1000) {
+    fTime = millis();
+    frequency = frequency - .01;
+  }
+  if (millis() - oldTime >= 1500*frequency) {
+    oldTime = millis();
+    index++;
+  }
+  gameTime = oldTime - startTime;
+}
+
+void thememenu() {
+  if (start == true && stop == true && jungle == false && rain == false) {
+    image(rainback, 0, 250);
+    image(jungleback, 500, 250);
+    image(monkey, 375, 375, 75, 75);
+    image(bucket, 125, 375, 75, 75);
+    fill(360);
+    textSize(30);
+    text("SELECT BOX TO\n<- CHOOSE THEME ->", 250, 440);
+    fill(360);
+    stroke(0);
+    strokeWeight(8);
+    rect(125, 100, 50, 50);
+    if (mouseX>100 && mouseX<150 && mouseY>75 && mouseY<125) {
+      fill(0, 100, 100);
+      stroke(0, 100, 100);
+      strokeWeight(8);
+      line(100, 100, 112.5, 125);
+      line(112.5, 125, 150, 75);
+    }
+    text("Rain", 125, 200);
+    fill(360);
+    stroke(0);
+    strokeWeight(8);
+    rect(375, 100, 50, 50);
+    if (mouseX>350 && mouseX<400 && mouseY>75 && mouseY<125) {
+      fill(0, 100, 100);
+      stroke(0, 100, 100);
+      strokeWeight(8);
+      line(350, 100, 362.5, 125);
+      line(362.5, 125, 400, 75);
+    }
+    text("Jungle", 375, 200);
+    fill(360);
+    stroke(0);
+    strokeWeight(1);
+  }
+}
+
+void startmenu() {
+  if (start == false && stop == false) {
+    checkbackground();
+    fill(120, 100, 100);
+    rect(150, 250, 100, 50);
+    rect(350, 250, 100, 50);
+    fill(0);
+    textSize(13);
+    text("Start", 150, 250);
+    text("Change Theme", 350, 250);
+  }
+}
+
+
+void playgame() {
+  if (start == true && stop == false) {  
+    checkbackground();
+    fill(360);
+    textAlign(CENTER);
+    textSize(40);
+    text("Score: " +score, 230, 50); //displays scores
+    timecheck();
+    c.display();
+    for (int i=1; i < index; i++) { //drops raindrops at the controlled time
+      r1[i].display();
+      r1[i].move();
+      r1[i].recognize(c);
+    }
+    for (int i= 0; i< lives; i++) {
+      image(heart, 400+40*i, 75, 35, 35);
+    }
+    if (lives == 0) {
+      start = false;
+      stop = true;
+      for (int i=1; i< index; i++) {
+        r1[i].vel.set(0, 0);
+        r1[i].acc.set(0, 0);
+        r1[i].loc.set(-500, -500);
+      }
+    }
+  }
+}
+
+void gameover() {
+  if (start == false && stop == true) {
+    checkbackground();
+    fill(360);
+    textSize(50);
+    text("GAME OVER!", 250, 150);
+    text("Score:" +score, 250, 400);
+    fill(120, 100, 100);
+    rect(150, 250, 100, 50);
+    rect(350, 250, 100, 50);
+    fill(0);
+    textSize(13);
+    text("Restart", 150, 250);
+    text("Change Theme", 350, 250);
+  }
+}

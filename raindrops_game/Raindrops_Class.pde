@@ -20,20 +20,19 @@ class Raindrops {
       image(raindrop, loc.x, loc.y, d, d); //displays raindrop picture
     }
     if (jungle == true && rain == false) {
-      image(jungledrop, loc.x, loc.y, d,d);
+      image(jungledrop, loc.x, loc.y, d, d);
     }
   }
 
   void move() {
-    if(loc.y > 0){
+    if (loc.y > 0) {
       acc.set(0, gameTime*.000001);
     }
-    else{
-      acc.set(0,0);
+    else {
+      acc.set(0, 0);
     }
     loc.add(vel);
     vel.add(acc);
-    println(acc);
   }
 
   void recognize(Catcher c) { 
@@ -56,5 +55,4 @@ class Raindrops {
     }
   }
 }
-
 
