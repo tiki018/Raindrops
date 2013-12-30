@@ -18,6 +18,8 @@ boolean start = true;
 boolean stop = true;
 boolean jungle = false;
 boolean rain = false;
+String raindirections;
+String jungledirections;
 
 void setup() {
   size(500, 500);
@@ -25,11 +27,13 @@ void setup() {
   imageMode(CENTER);
   textAlign(CENTER);
   rectMode(CENTER);
-  c = new Catcher();
+  c = new Catcher(); //creates catcher
   for (int i = 0; i<r1.length; i++) { //creates raindrops
     r1[i] = new Raindrops();
   }
   images();
+  raindirections = "Directions:\n Move your mouse to move the bucket from\n side to side to catch the raindrops that are falling.\nThe more you catch, the higher your score.";
+  jungledirections = "Directions:\n Move your mouse to move the monkey from\n side to side to catch the bananas that are falling.\nThe more you catch, the higher your score.";
 }
 
 void draw() {
@@ -41,47 +45,47 @@ void draw() {
 }
 
 void mousePressed() {
-  if (mouseX>100 && mouseX < 200 && mouseY>225 && mouseY<275 && start==false && stop==false) {
+  if (mouseX>100 && mouseX < 200 && mouseY>225 && mouseY<275 && start==false && stop==false) { //start button on start menu
     reset();
   }
-  if (mouseX > 300 && mouseX<400 && mouseY>225 && mouseY<275 && start == false && stop == false && jungle == true && rain == false) {
+  if (mouseX > 300 && mouseX<400 && mouseY>225 && mouseY<275 && start == false && stop == false && jungle == true && rain == false) { //change theme button on start menu
     background(0);
     start = true;
     stop = true;
     jungle = false;
     rain = false;
   }
-  if (mouseX > 300 && mouseX<400 && mouseY>225 && mouseY<275 && start == false && stop == false && jungle == false && rain == true) {
+  if (mouseX > 300 && mouseX<400 && mouseY>225 && mouseY<275 && start == false && stop == false && jungle == false && rain == true) { //change theme button on start menu
     background(0);
     start = true;
     stop = true;
     jungle = false;
     rain = false;
   }
-  if (mouseX>100 && mouseX < 200 && mouseY>225 && mouseY<275 && start==false && stop==true) {
+  if (mouseX>100 && mouseX < 200 && mouseY>225 && mouseY<275 && start==false && stop==true) { //restart button on game over
     reset();
   }
-  if (mouseX>300 && mouseX < 400 && mouseY>225 && mouseY<275 && start == false && stop == true && jungle == true && rain == false) {
+  if (mouseX>300 && mouseX < 400 && mouseY>225 && mouseY<275 && start == false && stop == true && jungle == true && rain == false) { //change theme button on game over
     background(0);
     start = true;
     stop = true;
     jungle = false;
     rain = false;
   }
-  if (mouseX>300 && mouseX < 400 && mouseY>225 && mouseY<275 && start == false && stop == true && jungle == false && rain == true) {
+  if (mouseX>300 && mouseX < 400 && mouseY>225 && mouseY<275 && start == false && stop == true && jungle == false && rain == true) { //change theme button on game over
     background(0);
     start = true;
     stop = true;
     jungle = false;
     rain = false;
   }
-  if (mouseX>100 && mouseX<150 && mouseY>75 && mouseY<125 && start == true && stop == true && jungle == false && rain == false) {
+  if (mouseX>100 && mouseX<150 && mouseY>75 && mouseY<125 && start == true && stop == true && jungle == false && rain == false) { //rain gamemode button on theme menu
     start = false;
     stop = false;
     rain = true;
     jungle = false;
   }
-  if (mouseX>350 && mouseX<400 && mouseY>75 && mouseY<125 && start == true && stop == true && jungle == false && rain == false) {
+  if (mouseX>350 && mouseX<400 && mouseY>75 && mouseY<125 && start == true && stop == true && jungle == false && rain == false) { //jungle gamemode button on theme menu
     start = false;
     stop = false;
     rain = false;
@@ -89,7 +93,7 @@ void mousePressed() {
   }
 }
 
-void reset() {
+void reset() { //resets all values used in game and changes the gamemode to start the game
   oldTime=0;
   lives=3;
   score = 0;
@@ -99,7 +103,7 @@ void reset() {
   stop = false;
 }
 
-void images() {
+void images() { //loads all images used in game
   heart = loadImage("heart.png");
   rainback = loadImage("rainback.jpg");
   jungleback = loadImage("jungle.png");
@@ -107,7 +111,7 @@ void images() {
   bucket = loadImage("bucket.png");
 }
 
-void checkbackground() {
+void checkbackground() { //checks which game mode is currently on, jungle or rain, and then chooses the resulting background
   if (jungle == true && rain == false) {
     background(jungleback);
   }
@@ -116,7 +120,7 @@ void checkbackground() {
   }
 }
 
-void timecheck() {
+void timecheck() { //checks time so acceleration can change over the period of the game, the frequency of the raindrops can be faster, and more raindrops fall.
   if (millis() - fTime >= 1000) {
     fTime = millis();
     frequency = frequency - .01;
@@ -128,7 +132,7 @@ void timecheck() {
   gameTime = oldTime - startTime;
 }
 
-void thememenu() {
+void thememenu() { //lets you choose either jungle theme or rain theme by clicking the corresponding box
   if (start == true && stop == true && jungle == false && rain == false) {
     image(rainback, 0, 250);
     image(jungleback, 500, 250);
@@ -141,7 +145,7 @@ void thememenu() {
     stroke(0);
     strokeWeight(8);
     rect(125, 100, 50, 50);
-    if (mouseX>100 && mouseX<150 && mouseY>75 && mouseY<125) {
+    if (mouseX>100 && mouseX<150 && mouseY>75 && mouseY<125) { //if the mouse hovers over the rain theme the box has a check mark and the rain text changes color
       fill(0, 100, 100);
       stroke(0, 100, 100);
       strokeWeight(8);
@@ -153,7 +157,7 @@ void thememenu() {
     stroke(0);
     strokeWeight(8);
     rect(375, 100, 50, 50);
-    if (mouseX>350 && mouseX<400 && mouseY>75 && mouseY<125) {
+    if (mouseX>350 && mouseX<400 && mouseY>75 && mouseY<125) { //if the mouse hovers over the jungle theme the box has a check mark and jungle text changes color
       fill(0, 100, 100);
       stroke(0, 100, 100);
       strokeWeight(8);
@@ -167,7 +171,7 @@ void thememenu() {
   }
 }
 
-void startmenu() {
+void startmenu() { //start menu, lets you start game or change the theme
   if (start == false && stop == false) {
     checkbackground();
     fill(120, 100, 100);
@@ -177,11 +181,21 @@ void startmenu() {
     textSize(13);
     text("Start", 150, 250);
     text("Change Theme", 350, 250);
+    textSize(15);
+    fill(360);
+    rect(250, 80, 375, 100);
+    fill(0);
+    if (rain == true && jungle == false){
+      text(raindirections, 250, 50);
+    }
+    if (jungle == true && rain == false){
+      text(jungledirections, 250, 50);
+    }
   }
 }
 
 
-void playgame() {
+void playgame() { //lets you play game
   if (start == true && stop == false) {  
     checkbackground();
     fill(360);
@@ -195,10 +209,10 @@ void playgame() {
       r1[i].move();
       r1[i].recognize(c);
     }
-    for (int i= 0; i< lives; i++) {
+    for (int i= 0; i< lives; i++) { // displays heart (lives)
       image(heart, 400+40*i, 75, 35, 35);
     }
-    if (lives == 0) {
+    if (lives == 0) { //if no lives left it changes to game over screen and clears all raindrops on screen
       start = false;
       stop = true;
       for (int i=1; i< index; i++) {
@@ -210,7 +224,7 @@ void playgame() {
   }
 }
 
-void gameover() {
+void gameover() { //game over screen displays score from last run, restart button and change theme button
   if (start == false && stop == true) {
     checkbackground();
     fill(360);
