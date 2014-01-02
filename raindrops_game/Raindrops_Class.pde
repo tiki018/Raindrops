@@ -9,7 +9,7 @@ class Raindrops {
   Raindrops() {
     d = 40;
     loc = new PVector(random(d, width-d), -40);
-    vel = new PVector(0, 2);
+    vel = new PVector(0, 2.5);
     acc = new PVector(0, .1);
     raindrop = loadImage("raindrop.png"); //loads raindrop picture
     jungledrop = loadImage("banana.png");

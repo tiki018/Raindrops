@@ -123,7 +123,7 @@ void checkbackground() { //checks which game mode is currently on, jungle or rai
 void timecheck() { //checks time so acceleration can change over the period of the game, the frequency of the raindrops can be faster, and more raindrops fall.
   if (millis() - fTime >= 1000) {
     fTime = millis();
-    frequency = frequency - .01;
+    frequency = frequency - .02;
   }
   if (millis() - oldTime >= 1500*frequency) {
     oldTime = millis();
